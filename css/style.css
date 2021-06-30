@@ -1,0 +1,51 @@
+body {
+    background-color: teal;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 42px;
+}
+
+main {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+header {
+    color: white;
+    background-color: palevioletred;
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    margin-left: 0px;
+    text-align: center;
+}
+
+#playerTurn {
+    color: white;
+    text-align: center;
+}
+
+#grid-container {
+    display: grid;
+    aspect-ratio: 1;
+    height: 35vw;
+    width: 35vw;
+    background-color: white;
+    border: 2px solid;
+    font-size: 60px;
+}
+
+.grid-item {
+    border: 1px solid black;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-item:hover {
+    background-color: palevioletred;
+    transition-duration: 0.1s;
+}
