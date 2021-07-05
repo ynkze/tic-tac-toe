@@ -1,8 +1,6 @@
-let gameActive = true;
-
-// gameBoard module
 let message = document.querySelector("#playerTurn");
-
+let gameActive = true;
+// gameBoard module
 const gameBoard = (function(){
 
     let toggleMarker = true;
@@ -21,20 +19,20 @@ const gameBoard = (function(){
         };
     } 
 
-    const gridClick = (gameActive) => {
+    const gridClick = () => {
         let gridsArr =  Array.from(document.querySelectorAll(".grid-item"));
         gridsArr.forEach(element =>
             element.addEventListener("click", ()=>{
-                /* invoke game logic: 
-                1. check whether already clicked
-                2. switch to next player
-                3. check if win/tie */
-                if (gameActive){
-                    if (element.textContent!=""){
-                        return;
-                    };
-                    nextMove(element);
-                    winCheck();
+            /* invoke game logic: 
+            1. check whether already clicked
+            2. switch to next player
+            3. check if win/tie */
+            if (gameActive){
+                if (element.textContent!=""){
+                    return;
+                };
+                nextMove(element);
+                winCheck();
                 }
             })
         )
@@ -53,6 +51,12 @@ const gameBoard = (function(){
         ];
 
         let gridsArr =  Array.from(document.querySelectorAll(".grid-item"));
+        //tie when all filled
+        if (gridsArr.every((element)=> element.textContent!="")){
+            message.textContent = "It's a tie!";
+            gameActive=false;
+        };
+
         // check for win condition
         for (let i = 0; i <= 7; i++) {
             const winCondition = winningCondition[i];
@@ -66,16 +70,12 @@ const gameBoard = (function(){
 
             if (a === b && b === c) {
                 message.textContent = (a=="X")? "Player X wins!": "Player O wins!";
-                gameActive = false;
+                gameActive=false;
                 break;
             }
         }
 
-        //tie when all filled
-        if (gridsArr.every((element)=> element.textContent!="")){
-            message.textContent = "It's a tie!";
-            gameActive = false;
-        };
+        
     };
 
     const nextMove = (grid) => {
@@ -113,13 +113,14 @@ const playerO = playerFactory('Player O');
 
 // initialization
 gameBoard.createBoard();
-gameBoard.gridClick(gameActive);
+gameBoard.gridClick();
 
 // restart button clear board and message, enable clicking again
 let restart = document.querySelector("#restart");
 restart.addEventListener("click", () => {
     let gridsArr =  Array.from(document.querySelectorAll(".grid-item"));
     gridsArr.forEach((element)=> element.textContent="");
-    gameBoard.gridClick(gameActive);
+    gameActive = true;
+    gameBoard.gridClick();
     message.textContent = "Start game!";
 })
